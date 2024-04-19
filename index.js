@@ -3,7 +3,7 @@ const path = require('path');
 const mongoose = require('mongoose');
 // creating server
 const server = express();
-
+const {User}  = require('./model/users.model');
 
 // to formate req, res in json
 server.use(express.json());
@@ -22,7 +22,7 @@ server.use(express.json());
 
 async function connectionToDb(){
 	try{
-		await mongoose.connect('');
+		await mongoose.connect('mongodb+srv://Suraj:bOQaQQZNeEqyl6jH@atlascluster.aai2jhm.mongodb.net/ClassBackend');
 		// mongodb+srv://Suraj:bOQaQQZNeEqyl6jH@atlascluster.aai2jhm.mongodb.net/
 		console.log("Connected to db");
 	}catch(err){
@@ -30,11 +30,74 @@ async function connectionToDb(){
 	}
 }
 
-connectionToDb();
 
-server.get('/home', (req, res)=>{
-	return res.json({data : "asdjkasjdkasdjakdjaksdjaks"})
+connectionToDb();
+//  Api start 
+
+server.get('/', (req, res)=>{
+	return res.send(`
+		Home page
+
+		use /insertData fro insertion data \n
+		use /getAlldata for query all data \n
+		use /getDataById \n
+	`)
+});
+
+
+server.post('/insertData', (req , res)=>{
+
+	const { name , email, phoneNumber, password } = req.body;
+	console.log(req.body);
+	// console.log(req);
+
+	// creating new Object
+	User.create({
+		name,
+		email,
+		phoneNumber,
+		password,
+	})
+
+	// other way to do the same
+	// const newUser = new User({
+	// 	name,
+	// 	email,
+	// 	phoneNumber,
+	// 	password
+	// })
+
+	//newuser.save(); // saving the object in to database
+
+	return res.send("User have sucessfully inserted");
 })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// api End 
 
 
 // location of the server running

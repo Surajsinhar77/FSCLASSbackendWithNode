@@ -23,18 +23,9 @@ const userSchema = new mongoose.Schema({
 		required : true
 	},
 
-	account : {
-		type : mongoose.Schema.Types.ObjectId,
-		ref : "account",
-	}
 });
 
 
 const User = mongoose.model('user', userSchema);
 
-export default User;
-
-// module.export = {
-// 	User
-
-// }
+module.exports = {User};
