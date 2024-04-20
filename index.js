@@ -70,12 +70,40 @@ server.post('/insertData', (req , res)=>{
 	//newuser.save(); // saving the object in to database
 
 	return res.send("User have sucessfully inserted");
+});
+
+
+
+
+server.get('/getAllData', async function (req, res){
+	const allData = await User.find({});
+	return res.send({message: "fetch sucessfully", data : allData});
+});
+
+
+server.get('/getIdData',async function (req, res){ 
+
+})
+
+
+server.get('/getIdData/:id',async function (req, res){ 
+	// const id = req.body.id;
+	console.log(req.params);
+	const userData = await User.findById(req.params.id);
+	return res.send({message:"data fetch sucessfully", data : userData});
 })
 
 
 
 
 
+// 
+const result = await User.updateOne({
+	{_id : id},
+	{
+		{$set:{name : newName } }
+	}
+});
 
 
 
